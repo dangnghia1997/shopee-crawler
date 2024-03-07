@@ -38,7 +38,14 @@ class Downloader implements DownloaderInterface
         $version = date('Y_m_d');
         $dir = 'json_data/'. $version . "/";
         $path = $dir . $fileName;
-        $saved = Storage::put($path, $body);
+
+        $json = json_decode($body);
+        $data = json_encode($json?->data ?? []);
+        $saved = Storage::put($path, $data);
+
+        if ($saved) {
+            // TODO: Publish to queue with saved file path
+        }
     }
 
     /**

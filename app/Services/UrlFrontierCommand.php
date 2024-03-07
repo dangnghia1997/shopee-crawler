@@ -34,7 +34,7 @@ class UrlFrontierCommand implements UrlFrontierCommandInterface
         }
 
         do {
-            $console->info("Crawling url:\t" . $url);
+            $counter && $console->info("Crawling url:\t" . $url);
             $content = $this->downloader->execute($url);
             if ($content) {
                 $this->preProcess($content, $url);
