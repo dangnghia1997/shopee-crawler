@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Interfaces;
 
-interface DownloaderInterface
+interface UrlConverterInterface
 {
     /**
      * @param string $url
      * @return string|null
      */
-    public function execute(string $url): string | null;
+    public function execute(string $url): string|null;
 }
