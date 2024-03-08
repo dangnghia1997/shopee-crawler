@@ -5,10 +5,11 @@ namespace App\Console\Commands;
 
 use App\Interfaces\PubSubServiceInterface;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class FileSavedSubscriber extends Command
 {
-    const CHANNEL =  'file.saved';
+    const CHANNEL = 'file.saved';
     /**
      * The name and signature of the console command.
      *
@@ -25,7 +26,8 @@ class FileSavedSubscriber extends Command
 
     public function __construct(
         readonly PubSubServiceInterface $pubSubService
-    ) {
+    )
+    {
         parent::__construct();
     }
 
@@ -36,6 +38,18 @@ class FileSavedSubscriber extends Command
     {
         $this->pubSubService->subscribe(self::CHANNEL, function ($path) {
             echo $path . 'was saved' . PHP_EOL;
+            if (!Storage::exists($path)) {
+                echo $path . " is not exists" . PHP_EOL;
+                return;
+            }
+            $contents = Storage::get($path);
+            $products = json_decode($contents);
+            $data = array_map(function ($product) {
+                return [
+                    'sku' => $product->sku
+                ];
+            }, $products);
+
         });
     }
 }
