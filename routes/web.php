@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/publish', function () {
+    \Illuminate\Support\Facades\Redis::publish('test-channel', json_encode([
+        'name' => 'Adam Wathan'
+    ]));
+});

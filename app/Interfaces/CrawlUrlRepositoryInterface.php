@@ -5,7 +5,7 @@ namespace App\Interfaces;
 
 interface CrawlUrlRepositoryInterface
 {
-    const string TBL_NAME = "crawl_urls";
+    const  TBL_NAME = "crawl_urls";
 
     /**
      * @return string

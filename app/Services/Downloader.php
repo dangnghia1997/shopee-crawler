@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Interfaces\DownloaderInterface;
+use App\Interfaces\PubSubServiceInterface;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 
 class Downloader implements DownloaderInterface
 {
     public function __construct(
-        readonly private Client $client
+        readonly private Client $client,
+        readonly private PubSubServiceInterface $pubSubService
     ) {}
 
     /**
@@ -44,7 +46,8 @@ class Downloader implements DownloaderInterface
         $saved = Storage::put($path, $data);
 
         if ($saved) {
-            // TODO: Publish to queue with saved file path
+            $channel = 'file.saved';
+            $this->pubSubService->publish($channel, $path);
         }
     }
 
