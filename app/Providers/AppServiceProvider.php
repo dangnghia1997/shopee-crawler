@@ -5,10 +5,12 @@ namespace App\Providers;
 
 use App\Interfaces\CrawlUrlRepositoryInterface;
 use App\Interfaces\DownloaderInterface;
+use App\Interfaces\PubSubServiceInterface;
 use App\Interfaces\UrlConverterInterface;
 use App\Interfaces\UrlFrontierCommandInterface;
 use App\Repositories\CrawlUrlRepository;
 use App\Services\PageToApiUrlConverter;
+use App\Services\RedisPubSubService;
 use App\Services\UrlFrontierCommand;
 use App\Services\Downloader;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UrlFrontierCommandInterface::class, UrlFrontierCommand::class);
         $this->app->bind(CrawlUrlRepositoryInterface::class, CrawlUrlRepository::class);
         $this->app->bind(UrlConverterInterface::class, PageToApiUrlConverter::class);
+        $this->app->bind(PubSubServiceInterface::class, RedisPubSubService::class);
 
     }
 
