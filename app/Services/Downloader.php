@@ -48,6 +48,7 @@ class Downloader implements DownloaderInterface
         if ($saved) {
             $channel = 'file.saved';
             $this->pubSubService->publish($channel, $path);
+            //
         }
     }
 
