@@ -6,12 +6,14 @@ namespace App\Providers;
 use App\Interfaces\CrawlUrlRepositoryInterface;
 use App\Interfaces\DownloaderInterface;
 use App\Interfaces\ProductRepositoryInterface;
+use App\Interfaces\ProductServiceInterface;
 use App\Interfaces\PubSubServiceInterface;
 use App\Interfaces\UrlConverterInterface;
 use App\Interfaces\UrlFrontierCommandInterface;
 use App\Repositories\CrawlUrlRepository;
 use App\Repositories\ProductRepository;
 use App\Services\PageToApiUrlConverter;
+use App\Services\ProductService;
 use App\Services\RedisPubSubService;
 use App\Services\UrlFrontierCommand;
 use App\Services\Downloader;
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UrlConverterInterface::class, PageToApiUrlConverter::class);
         $this->app->bind(PubSubServiceInterface::class, RedisPubSubService::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(ProductServiceInterface::class, ProductService::class);
 
     }
 
