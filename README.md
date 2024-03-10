@@ -50,8 +50,11 @@ In this solution, we need 2 long processes run.
     ./vendor/bin/sail php artisan tiki:crawl https://tiki.vn/laptop/c8095
     ```
 ## Result Screenshot
-
-![Crawler Note](docs/screencapture.png)
+- 2 pages:
+  - Url: /
+![Home Page](docs/screencapture.png)
+  - Url: /checkout
+![Chekout PAge](docs/screencapture-checkout-page.png)
 
 ### Route List
 ```text
