@@ -16,8 +16,15 @@ const {
 } = storeToRefs(useCartStore())
 
 const itemsCount = computed(() => {
-    return cart.value?.reduce(((accumulator, currentValue) => accumulator + currentValue.qty), 0) || 0
+    return cart.value?.items_count || 0
 })
+
+function formatPrice(value) {
+    let val = (value/1).toFixed(0).replace('.', ',')
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+}
+
+const grandTotal = computed(() => formatPrice(cart.value?.grant_total || 0))
 
 
 onMounted(async () => {
@@ -39,9 +46,12 @@ onMounted(async () => {
             <div>&nbsp;</div>
             <h1 class="text-center text-2xl font-bold py-4">Danh mục: Máy tính & Laptop</h1>
             <div class="p-2">
-                <button class="bg-pink-100 p-4 rounded-xl shadow-2xl text-gray-700 font-bold">
-                    Giỏ hàng <span class="text-red-600 text-lg p-1">({{itemsCount}})</span>
+                <button class="bg-white p-4 rounded-xl shadow-2xl text-gray-700 font-bold mr-4">
+                    Tổng: <span class="text-red-600 text-lg p-1">{{grandTotal}} <sup>₫</sup></span>
                 </button>
+                <Link href="/checkout" class="bg-pink-100 p-4 rounded-xl shadow-2xl text-gray-700 font-bold">
+                    Giỏ hàng <span class="text-red-600 text-lg p-1">({{itemsCount}})</span>
+                </Link>
             </div>
         </div>
         <div class="max-w-screen-2xl mx-auto flex justify-around gap-4">

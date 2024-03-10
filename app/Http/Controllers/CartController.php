@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddToCartRequest;
+use App\Http\Resources\CartResource;
 use App\Http\Resources\CartItemCollection;
 use App\Interfaces\CartServiceInterface;
 use Illuminate\Http\Request;
@@ -25,22 +26,18 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * @param string $maskedId
-     * @return CartItemCollection
-     */
-    public function get(string $maskedId): CartItemCollection
+    public function get(string $maskedId): CartResource
     {
-        $items = $this->cartService->getCart($maskedId);
-        return new CartItemCollection($items);
+        $cart = $this->cartService->getCart($maskedId);
+        return new CartResource($cart);
     }
 
     /**
      * @param AddToCartRequest $request
      * @param string $maskedId
-     * @return CartItemCollection
+     * @return CartResource
      */
-    public function addItems(AddToCartRequest $request, string $maskedId): CartItemCollection
+    public function addItems(AddToCartRequest $request, string $maskedId): CartResource
     {
         $this->cartService->addToCart($request, $maskedId);
         return $this->get($maskedId);

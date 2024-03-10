@@ -8,6 +8,7 @@ use App\Interfaces\CartItemRepositoryInterface;
 use App\Interfaces\CartRepositoryInterface;
 use App\Interfaces\CartServiceInterface;
 use App\Interfaces\ProductRepositoryInterface;
+use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -27,10 +28,16 @@ class CartService implements CartServiceInterface
         return $this->cartRepository->createEmptyCart();
     }
 
-    public function getCart(string $maskedId): Collection
+    /**
+     * @param string $maskedId
+     * @return Cart|null
+     */
+    public function getCart(string $maskedId): ?Cart
     {
         $cart = $this->cartRepository->getCartByMaskedId($maskedId);
-        return $this->cartItemRepository->getItems((int)$cart->id);
+        $cartItems = $this->cartItemRepository->getItems((int)$cart->id);
+        $cart->setAttribute('items', $cartItems);
+        return $cart;
     }
 
     /**
@@ -43,7 +50,7 @@ class CartService implements CartServiceInterface
         return (int)$cart->id;
     }
 
-    public function addToCart(AddToCartRequest $addToCartRequest, string $maskedId)
+    public function addToCart(AddToCartRequest $addToCartRequest, string $maskedId): void
     {
         $cartId = $this->getCartId($maskedId);
 
@@ -68,6 +75,31 @@ class CartService implements CartServiceInterface
             'name' => $product->name,
         ]);
 
-        return $this->cartItemRepository->addItemToCart($cartId, $item);
+         $this->cartItemRepository->addItemToCart($cartId, $item);
+         $this->reCalculate($maskedId);
+    }
+
+    /**
+     * @param string $maskedId
+     * @return void
+     */
+    public function reCalculate(string $maskedId): void
+    {
+        $currentCart = $this->cartRepository->getCartByMaskedId($maskedId);
+        $items = $this->cartItemRepository->getItems((int)$currentCart->id);
+
+        $itemsCount = 0;
+        $grantTotal = 0;
+
+        /** @var CartItem $item */
+        foreach ($items as $item) {
+            $itemsCount += $item->qty;
+            $grantTotal += $item->row_total;
+        }
+
+        $currentCart->setAttribute('grant_total', $grantTotal);
+        $currentCart->setAttribute('items_count', $itemsCount);
+
+        $currentCart->save();
     }
 }

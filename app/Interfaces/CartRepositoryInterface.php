@@ -17,6 +17,4 @@ interface CartRepositoryInterface
      * @return Cart|null
      */
     public function getCartByMaskedId(string $maskedId): ?Cart;
-
-
 }

@@ -15,17 +15,15 @@ class CartItemCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return [
-            'data' => $this->collection->map(function ($item) {
-                return [
-                    'item_id' => $item->id,
-                    'sku' => $item->sku,
-                    'name' => $item->name,
-                    'qty' => $item->qty,
-                    'price' => $item->price,
-                    'row_total' => $item->row_total
-                ];
-            })
-        ];
+        return [...$this->collection->map(function ($item) {
+            return [
+                'item_id' => $item->id,
+                'sku' => $item->sku,
+                'name' => $item->name,
+                'qty' => $item->qty,
+                'price' => $item->price,
+                'row_total' => $item->row_total
+            ];
+        })];
     }
 }

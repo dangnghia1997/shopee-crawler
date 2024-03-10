@@ -38,7 +38,7 @@ class CartItemRepository implements CartItemRepositoryInterface
     public function addItemToCart(int $cartId, CartItem $item): CartItem
     {
         $item->setAttribute('cart_id', $cartId);
-        $this->model->upsert($item->toArray(), ['product_id'], ['qty', 'price', 'row_total']);
+        $this->model->upsert($item->toArray(), ['product_id'], ['cart_id', 'sku', 'name' ,'qty', 'price', 'row_total']);
         return $item;
     }
 }
