@@ -15,7 +15,7 @@ onMounted(async () => {
     <Head title="PLP"/>
 
     <div
-        class="bg-blue-100 min-h-screen"
+        class="bg-blue-50 min-h-screen"
     >
         <div class="max-w-screen-2xl mx-auto bg-yellow-300 border-b-4 border-green-700">
             <h1 class="text-center text-2xl font-bold py-4">Danh mục: Máy tính & Laptop</h1>

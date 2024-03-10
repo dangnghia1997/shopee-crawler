@@ -25,15 +25,10 @@ async function paginateTo(url) {
 }
 
 const options = ref([
-    { name: 'Giá', value: '' },
-    { name: 'Giá: Tăng dần', value: 'price.asc' },
-    { name: 'Giá: Giảm dần', value: 'price.desc' }
+    {name: 'Giá', value: ''},
+    {name: 'Giá: Tăng dần', value: 'price.asc'},
+    {name: 'Giá: Giảm dần', value: 'price.desc'}
 ]);
-
-
-const optionValues = computed(() => {
-    return options.value.map(o => o.value)
-});
 
 const selected = ref('')
 
@@ -44,10 +39,10 @@ watch(selected, function (_option) {
 });
 
 const latestSortActiveClass = computed(() => {
-  return sortBy.value === 'created_at.desc' ? 'bg-blue-500 text-white font-bold' : 'bg-white text-gray-900'
+    return sortBy.value === 'created_at.desc' ? 'bg-blue-500 text-white font-bold' : 'bg-white text-gray-900'
 })
 const bestSaleActiveClass = computed(() => {
-  return sortBy.value === 'sold.desc' ? 'bg-blue-500 text-white font-bold' : 'bg-white text-gray-900'
+    return sortBy.value === 'sold.desc' ? 'bg-blue-500 text-white font-bold' : 'bg-white text-gray-900'
 })
 
 
@@ -60,23 +55,24 @@ function quickSort(_sortBy) {
 
 <template>
     <div class="basis-4/5 pb-10">
-        <div class="flex items-center gap-4 my-4">
+        <div class="flex items-center gap-4 my-4 py-4 px-2">
             <h4 class="text-lg font-bold text-gray-600">Sắp xếp theo</h4>
             <button :class="[
-                'px-3 h-12 text-lg rounded-sm',
+                'px-3 h-12 text-lg rounded-sm shadow-2xl',
                 latestSortActiveClass
             ]" @click="quickSort('created_at.desc')">
                 Mới nhất
             </button>
             <button :class="[
-                'px-3 h-12 text-lg rounded-sm',
+                'px-3 h-12 text-lg rounded-sm shadow-2xl',
                 bestSaleActiveClass
             ]" @click="quickSort('sold.desc')">
                 Bán chạy
             </button>
-            <select v-model="selected" :class="['h-12 text-lg rounded-sm', selected !== '' ? 'text-blue-600 font-bold' : 'text-gray-900']">
+            <select v-model="selected"
+                    :class="['h-12 text-lg rounded-sm shadow-2xl border-none', selected !== '' ? 'text-blue-600 font-bold' : 'text-gray-900']">
                 <option v-for="option in options" :value="option.value">
-                    {{ option.name}}
+                    {{ option.name }}
                 </option>
             </select>
         </div>

@@ -6,8 +6,8 @@ export const useProductsStore = defineStore('useProductsStore', function () {
     const rawData = ref([]);
     const page = ref(1);
     const sortBy = ref('created_at.desc')
-    const brand = ref()
-    const price = ref()
+    const brand = ref('')
+    const price = ref('')
 
     const pageLinks = computed(() => {
         return rawData.value?.links || [];
@@ -18,6 +18,14 @@ export const useProductsStore = defineStore('useProductsStore', function () {
     })
 
     watch(sortBy, function(newSortBy) {
+        getProducts()
+    })
+
+    watch(price, function(newSortBy) {
+        getProducts()
+    })
+
+    watch(brand, function(newSortBy) {
         getProducts()
     })
 
@@ -68,5 +76,7 @@ export const useProductsStore = defineStore('useProductsStore', function () {
         pageLinks,
         getProducts,
         sortBy,
+        price,
+        brand,
     }
 })
