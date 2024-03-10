@@ -2,19 +2,25 @@
 import {Head, Link} from '@inertiajs/vue3';
 import ProductList from "@/Components/ProductList.vue";
 import SideBar from "@/Components/SideBar.vue";
+import {onMounted} from "vue";
+import {useProductsStore} from "@/stores/useProductsStore.js";
 
+const {getProducts} = useProductsStore()
+onMounted(async () => {
+    await getProducts();
+})
 </script>
 
 <template>
     <Head title="PLP"/>
 
     <div
-        class="bg-blue-200 min-h-screen"
+        class="bg-blue-100 min-h-screen"
     >
         <div class="max-w-screen-2xl mx-auto bg-yellow-300 border-b-4 border-green-700">
             <h1 class="text-center text-2xl font-bold py-4">Danh mục: Máy tính & Laptop</h1>
         </div>
-        <div class="max-w-screen-2xl mx-auto bg-yellow-300 flex justify-around gap-4">
+        <div class="max-w-screen-2xl mx-auto flex justify-around gap-4">
             <SideBar />
             <ProductList/>
         </div>
