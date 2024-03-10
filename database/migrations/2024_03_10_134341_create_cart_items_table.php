@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cart_id');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('product_id')->unique();
             $table->string('sku');
             $table->string('name');
             $table->integer('qty');
-            $table->decimal('price', 10, 2);
-            $table->decimal('row_total', 10, 2);
-            $table->timestamps();
+            $table->decimal('price', 15, 2);
+            $table->decimal('row_total', 15, 2);
         });
 
         Schema::table('cart_items', function (Blueprint $table) {

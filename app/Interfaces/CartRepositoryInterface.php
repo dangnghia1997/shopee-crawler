@@ -12,5 +12,11 @@ interface CartRepositoryInterface
      */
     public function createEmptyCart(): string;
 
-    public function getCartByMaskedId(string $maskedId): Cart;
+    /**
+     * @param string $maskedId
+     * @return Cart|null
+     */
+    public function getCartByMaskedId(string $maskedId): ?Cart;
+
+
 }

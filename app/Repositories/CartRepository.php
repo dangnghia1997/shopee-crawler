@@ -17,7 +17,11 @@ class CartRepository implements CartRepositoryInterface
         return $model->masked_id;
     }
 
-    public function getCartByMaskedId(string $maskedId): Cart
+    /**
+     * @param string $maskedId
+     * @return Cart|null
+     */
+    public function getCartByMaskedId(string $maskedId): ?Cart
     {
         return $this->model->newQuery()->where('masked_id', '=', $maskedId)->first();
     }

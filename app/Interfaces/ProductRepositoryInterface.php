@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ProductRepositoryInterface
 {
+    public function getById(int $id): Model;
+
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int|null $perPage

@@ -14,6 +14,15 @@ class ProductRepository implements ProductRepositoryInterface
     ) {}
 
     /**
+     * @param int $id
+     * @return Model
+     */
+    public function getById(int $id): Model
+    {
+        return $this->model->newQuery()->where('id', '=', $id)->first();
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int|null $perPage
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
