@@ -1,5 +1,7 @@
 <script setup>
 import AddToCartIcon from "@/Components/AddToCartIcon.vue";
+import {useCartStore} from "@/stores/useCartStore.js";
+import {storeToRefs} from "pinia";
 
 const props = defineProps({
     name: String,
@@ -17,8 +19,15 @@ function formatPrice(value) {
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
 
-function addCart(productId) {
-    console.log('added product Id ' + productId + ' to cart')
+const {
+    addItemToCart
+} = useCartStore();
+
+async function addCart(productId) {
+    await addItemToCart({
+        product_id: productId,
+        qty: 1
+    })
 }
 </script>
 

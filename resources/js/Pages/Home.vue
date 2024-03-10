@@ -2,13 +2,31 @@
 import {Head, Link} from '@inertiajs/vue3';
 import ProductList from "@/Components/ProductList.vue";
 import SideBar from "@/Components/SideBar.vue";
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 import {useProductsStore} from "@/stores/useProductsStore.js";
+import {useCartStore} from "@/stores/useCartStore.js";
+import {storeToRefs} from "pinia";
 
 const {getProducts} = useProductsStore()
-onMounted(async () => {
-    await getProducts();
+
+const {getCart} = useCartStore()
+
+const {
+    cart
+} = storeToRefs(useCartStore())
+
+const itemsCount = computed(() => {
+    return cart.value?.reduce(((accumulator, currentValue) => accumulator + currentValue.qty), 0) || 0
 })
+
+
+onMounted(async () => {
+    await Promise([
+        getProducts(),
+        getCart()
+    ])
+})
+
 </script>
 
 <template>
@@ -17,8 +35,14 @@ onMounted(async () => {
     <div
         class="bg-blue-50 min-h-screen"
     >
-        <div class="max-w-screen-2xl mx-auto bg-yellow-300 border-b-4 border-green-700">
+        <div class="max-w-screen-2xl mx-auto bg-yellow-300 border-b-4 border-green-700 flex justify-between items-center">
+            <div>&nbsp;</div>
             <h1 class="text-center text-2xl font-bold py-4">Danh mục: Máy tính & Laptop</h1>
+            <div class="p-2">
+                <button class="bg-pink-100 p-4 rounded-xl shadow-2xl text-gray-700 font-bold">
+                    Giỏ hàng <span class="text-red-600 text-lg p-1">({{itemsCount}})</span>
+                </button>
+            </div>
         </div>
         <div class="max-w-screen-2xl mx-auto flex justify-around gap-4">
             <SideBar />
