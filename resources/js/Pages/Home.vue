@@ -42,14 +42,13 @@ onMounted(async () => {
     <div
         class="bg-blue-50 min-h-screen"
     >
-        <div class="max-w-screen-2xl mx-auto bg-yellow-300 border-b-4 border-green-700 flex justify-between items-center">
-            <div>&nbsp;</div>
-            <h1 class="text-center text-2xl font-bold py-4">Danh mục: Máy tính & Laptop</h1>
+        <div class="max-w-screen-2xl mx-auto bg-pink-200 border-b-4 border-green-700 flex justify-between items-center">
+            <h1 class="text-center text-2xl font-bold py-4 mx-3">Danh mục: Máy tính & Laptop</h1>
             <div class="p-2">
                 <button class="bg-white p-4 rounded-xl shadow-2xl text-gray-700 font-bold mr-4">
                     Tổng: <span class="text-red-600 text-lg p-1">{{grandTotal}} <sup>₫</sup></span>
                 </button>
-                <Link href="/checkout" class="bg-pink-100 p-4 rounded-xl shadow-2xl text-gray-700 font-bold">
+                <Link href="/checkout" class="bg-yellow-200 p-4 rounded-xl shadow-2xl text-gray-700 font-bold">
                     Giỏ hàng <span class="text-red-600 text-lg p-1">({{itemsCount}})</span>
                 </Link>
             </div>
