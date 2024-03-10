@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'search']);
+Route::post('/cart', [\App\Http\Controllers\CartController::class, 'createEmptyCart']);
+Route::get('/cart/{maskedId}', [\App\Http\Controllers\CartController::class, 'get']);

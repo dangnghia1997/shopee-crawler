@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Interfaces\CartItemRepositoryInterface;
+use App\Interfaces\CartRepositoryInterface;
+use App\Interfaces\CartServiceInterface;
 use App\Interfaces\CrawlUrlRepositoryInterface;
 use App\Interfaces\DownloaderInterface;
 use App\Interfaces\ProductRepositoryInterface;
@@ -10,8 +13,11 @@ use App\Interfaces\ProductServiceInterface;
 use App\Interfaces\PubSubServiceInterface;
 use App\Interfaces\UrlConverterInterface;
 use App\Interfaces\UrlFrontierCommandInterface;
+use App\Repositories\CartItemRepository;
+use App\Repositories\CartRepository;
 use App\Repositories\CrawlUrlRepository;
 use App\Repositories\ProductRepository;
+use App\Services\CartService;
 use App\Services\PageToApiUrlConverter;
 use App\Services\ProductService;
 use App\Services\RedisPubSubService;
@@ -34,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PubSubServiceInterface::class, RedisPubSubService::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(ProductServiceInterface::class, ProductService::class);
+        $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
+        $this->app->bind(CartItemRepositoryInterface::class, CartItemRepository::class);
+        $this->app->bind(CartServiceInterface::class, CartService::class);
 
     }
 
